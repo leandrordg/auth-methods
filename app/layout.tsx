@@ -5,7 +5,7 @@ import "./globals.css";
 const font = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Autenticação com Next Auth v5",
+  title: "Autenticação | Next Auth v5",
 };
 
 export default function RootLayout({

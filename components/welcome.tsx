@@ -1,28 +1,26 @@
-import Image from "next/image";
-
-import { SignIn } from "@/components/sign-in";
 import { auth } from "@/auth";
-import { SignOut } from "./sign-out";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export async function Welcome() {
   const session = await auth();
 
-  if (!session?.user) return <SignIn />;
+  if (!session?.user) return null;
 
   return (
-    <section className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Image
-          src={session.user.image!}
-          alt={session.user.name!}
-          width={32}
-          height={32}
-          className="rounded-full"
-        />
-        <h1>Bem vindo, {session.user.name}!</h1>
-      </div>
+    <section className="flex items-center gap-2">
+      <Avatar className="h-8 w-8">
+        <AvatarImage src={session.user.image!} alt={session.user.name!} />
+        <AvatarFallback>
+          <Skeleton className="size-8 rounded-full" />
+        </AvatarFallback>
+      </Avatar>
 
-      <SignOut />
+      <div>
+        <h1>{session.user.name}</h1>
+        <p className="text-xs text-muted-foreground">{session.user.email}</p>
+      </div>
     </section>
   );
 }
